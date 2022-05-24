@@ -10,7 +10,7 @@ public class BoardCase {
 
     public BoardCase(int x, int y, String content) {
         this.content = content;
-        this.panel = new JPanel();
+        this.panel = new JPanel(null);
         panel.setBounds(x, y, 20, 20);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setBackground(Color.LIGHT_GRAY);
@@ -54,11 +54,14 @@ public class BoardCase {
     }
 
     public void devoilerCase() {
-        JLabel label = new JLabel(this.getContent());
+        panel.removeAll();
+        JLabel label = new JLabel();
+        label.setBounds(5, 0, 20, 20);
         if (this.getContent().equals("X")) {
             //Perdu ! Modifier le code ci-dessous.
-            label.setForeground(Color.RED);
+            panel.setBackground(Color.RED);
         } else {
+            panel.setBackground(Color.LIGHT_GRAY);
             if (this.getContent().equals("1")) {
                 label.setText(this.getContent());
                 label.setForeground(Color.BLUE);
@@ -73,12 +76,18 @@ public class BoardCase {
             }
         }
         panel.add(label);
+        panel.repaint();
     }
 
     public void marquerCaseAvecBombe() {
+        panel.removeAll();
         JLabel label = new JLabel("V");
+        label.setBounds(5, 0, 20, 20);
         label.setForeground(Color.RED);
+        panel.setBackground(Color.LIGHT_GRAY);
         panel.add(label);
+        panel.add(label);
+        panel.repaint();
     }
 }
 
