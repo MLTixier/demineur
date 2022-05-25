@@ -20,7 +20,7 @@ public class Game {
 
         frame = new JFrame();
         frame.setTitle("demineur");
-        frame.setSize(400, 600);
+        frame.setSize(600, 700);
         //frame.setResizable(false);
         frame.setLayout(null);
         frame.setContentPane(panel);
@@ -28,7 +28,7 @@ public class Game {
     }
 
     public void launch() {
-        board = new Board(300);
+        board = new Board(400);
         this.panel.add(board.getPanel());
         //frame.repaint();
         this.frame.setVisible(true);
