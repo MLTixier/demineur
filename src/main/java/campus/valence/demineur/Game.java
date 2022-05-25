@@ -36,7 +36,7 @@ public class Game {
 
     public void launch(Game game) {
         board = new Board(400, NB_BOMBES, game);
-        ImageIcon imageBombe = new ImageIcon("bombe.png");
+        ImageIcon imageBombe = new ImageIcon("./bombe.png");
         labelCompteur = new JLabel(String.valueOf(compteurRestant));
         labelCompteur.setFont(new Font("Serif", Font.BOLD, 20));
         labelCompteur.setBounds(100,30,100,100);
