@@ -10,13 +10,16 @@ public class GameMouseListener implements MouseListener {
     private BoardCase boardCase;
 
     public GameMouseListener(BoardCase boardCase) {
-        this.boardCase = boardCase ;
+        this.boardCase = boardCase;
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
-           boardCase.devoilerCase();
+        if (this.boardCase.getGame().getNbCasesDevoilees() == 399 && this.boardCase.getGame().getCompteurRestant() == 0) {
+            //fin de la partie !
+            System.out.println("vous avez gagné !");
+        } else if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+            boardCase.devoilerCase();
         } else if (mouseEvent.getButton() == 3) {
             boardCase.marquerCaseAvecBombe();
         }

@@ -9,17 +9,19 @@ public class Board {
 
     private final JPanel panel;
     private BoardCase[][] board;
+    private Game game;
 
-    public Board(int size) {
+    public Board(int size, int NB_BOMBES, Game game) {
+        this.game = game;
         this.panel = new JPanel();
         panel.setBounds(100, 150, size, size);
         panel.setBackground(Color.darkGray);
         panel.setLayout(null);
-        Demineur demineur = Demineur.create(40, 20, 0, 0);
+        Demineur demineur = Demineur.create(NB_BOMBES, 20, 0, 0);
         board = new BoardCase[20][20];
         for (int i = 0; i < (size/20); i++) {
             for (int j = 0; j < (size/20); j++) {
-                BoardCase boardCase = new BoardCase(i * 20, j * 20, demineur.giveContent(i, j), this);
+                BoardCase boardCase = new BoardCase(i * 20, j * 20, demineur.giveContent(i, j), this, game);
                 board[i][j] = boardCase;
                 panel.add(boardCase.getPanel());
                 boardCase.getPanel().addMouseListener(new GameMouseListener(boardCase));

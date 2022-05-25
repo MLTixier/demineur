@@ -11,48 +11,24 @@ public class BoardCase {
     private int y;
     private Board board;
     private Color bgColor;
-    private boolean devoilee ;
+    private boolean devoilee;
+    private boolean cochee;
+    private Game game;
 
-    public BoardCase(int x, int y, String content, Board board) {
+
+    public BoardCase(int x, int y, String content, Board board, Game game) {
+        this.game = game;
         this.board = board;
         this.content = content;
         this.panel = new JPanel(null);
         this.x = x;
         this.y = y;
-        this.devoilee = false ;
+        this.devoilee = false;
+        this.cochee = false;
         panel.setBounds(x, y, 20, 20);
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panel.setBorder(BorderFactory.createRaisedBevelBorder());
         bgColor = Color.LIGHT_GRAY;
         panel.setBackground(bgColor);
-
-        /*
-        //pour afficher la carte :
-
-        JLabel label = new JLabel();
-        if (this.getContent().equals("X")) {
-            //Perdu ! Modifier le code ci-dessous.
-            label.setText(this.getContent());
-            label.setForeground(Color.RED);
-        } else {
-            if (this.getContent().equals("1")) {
-                label.setText(this.getContent());
-                label.setForeground(Color.BLUE);
-            } else if (this.getContent().equals("2")) {
-                label.setText(this.getContent());
-                label.setForeground(Color.MAGENTA);
-            } else if (this.getContent().equals("0")) {
-                panel.setBackground(Color.WHITE);
-            } else {
-                label.setText(this.getContent());
-                label.setForeground(Color.BLACK);
-            }
-        }
-        panel.add(label);
-
-
-
-         */
-
     }
 
     public JPanel getPanel() {
@@ -66,7 +42,7 @@ public class BoardCase {
     public void devoilerCase() {
         panel.removeAll();
         if (this.getContent().equals("X")) {
-            //Perdu ! Modifier le code ci-dessous.
+            //Perdu ! Ajouter fenêtre.
             panel.setBackground(Color.RED);
         } else {
             devoilerCaseVide();
@@ -89,37 +65,51 @@ public class BoardCase {
     }
 
     public void devoilerCaseVide() {
-        this.devoilee = true;
-        panel.removeAll();
-        JLabel label = new JLabel();
-        label.setBounds(5, 0, 20, 20);
-        panel.setBackground(Color.LIGHT_GRAY);
-        if (this.getContent().equals("0")) {
+        if (!this.isDevoilee()) {
+            this.devoilee = true;
+            panel.removeAll();
+            JLabel label = new JLabel();
+            label.setBounds(5, 0, 20, 20);
             panel.setBackground(Color.WHITE);
-            this.devoilerCasesVoisines();
-        } else if (this.getContent().equals("1")) {
-            label.setText(this.getContent());
-            label.setForeground(Color.BLUE);
-        } else if (this.getContent().equals("2")) {
-            label.setText(this.getContent());
-            label.setForeground(Color.MAGENTA);
-        } else {
-            label.setText(this.getContent());
-            label.setForeground(Color.BLACK);
+            if (this.getContent().equals("0")) {
+                this.devoilerCasesVoisines();
+            } else if (this.getContent().equals("1")) {
+                label.setText(this.getContent());
+                label.setForeground(Color.BLUE);
+            } else if (this.getContent().equals("2")) {
+                label.setText(this.getContent());
+                label.setForeground(Color.MAGENTA);
+            } else {
+                label.setText(this.getContent());
+                label.setForeground(Color.BLACK);
+            }
+            panel.add(label);
+            panel.repaint();
+            game.addNbCasesDevoilees(-1);
         }
-        panel.add(label);
-        panel.repaint();
     }
 
     public void marquerCaseAvecBombe() {
-        panel.removeAll();
-        JLabel label = new JLabel("V");
-        label.setBounds(5, 0, 20, 20);
-        label.setForeground(Color.RED);
-        panel.setBackground(Color.LIGHT_GRAY);
-        panel.add(label);
-        panel.add(label);
-        panel.repaint();
+        if (isCochee()) {
+            panel.removeAll();
+            panel.setBackground(Color.LIGHT_GRAY);
+            panel.repaint();
+            game.addCompteurRestant(1);
+            this.devoilee = false;
+            this.cochee = false;
+        } else {
+            panel.removeAll();
+            JLabel label = new JLabel("V");
+            label.setBounds(5, 0, 20, 20);
+            label.setForeground(Color.RED);
+            panel.setBackground(Color.LIGHT_GRAY);
+            panel.add(label);
+            panel.add(label);
+            panel.repaint();
+            game.addCompteurRestant(-1);
+            this.devoilee = true;
+            this.cochee = true;
+        }
     }
 
     public int getX() {
@@ -157,6 +147,20 @@ public class BoardCase {
 
     public boolean isDevoilee() {
         return devoilee;
+    }
+
+
+    public Game getGame() {
+        return game;
+    }
+
+
+    public boolean isCochee() {
+        return cochee;
+    }
+
+    public void setCochee(boolean cochee) {
+        this.cochee = cochee;
     }
 
 }

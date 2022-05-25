@@ -10,8 +10,16 @@ public class Game {
     private JFrame frame;
     private JPanel panel;
     private Board board;
+    private int NB_BOMBES;
+    private int compteurRestant ;
+    private JLabel labelCompteur ;
+    private int nbCasesDevoilees ;
 
-    Game() {
+
+    public Game(int NB_BOMBES) {
+        this.NB_BOMBES = NB_BOMBES;
+        this.compteurRestant = NB_BOMBES;
+        this.nbCasesDevoilees = 0;
         this.BGCOLOR = Color.LIGHT_GRAY;
         panel = new JPanel();
         panel.setFocusable(true);
@@ -24,17 +32,62 @@ public class Game {
         //frame.setResizable(false);
         frame.setLayout(null);
         frame.setContentPane(panel);
-
     }
 
-    public void launch() {
-        board = new Board(400);
+    public void launch(Game game) {
+        board = new Board(400, NB_BOMBES, game);
+        ImageIcon imageBombe = new ImageIcon("bombe.png");
+        labelCompteur = new JLabel(String.valueOf(compteurRestant));
+        labelCompteur.setFont(new Font("Serif", Font.BOLD, 20));
+        labelCompteur.setBounds(100,30,100,100);
+        labelCompteur.setForeground(Color.BLACK);
+        labelCompteur.setIcon(imageBombe);
+        labelCompteur.setIconTextGap(7);
+        //labelCompteur.setBackground(Color.BLUE);
+        //labelCompteur.setOpaque(true);
+        this.panel.add(labelCompteur);
         this.panel.add(board.getPanel());
         //frame.repaint();
         this.frame.setVisible(true);
     }
 
+    public int getCompteurRestant() {
+        return compteurRestant;
+    }
+
+    public void addCompteurRestant(int nombre) {
+        this.compteurRestant = compteurRestant + nombre;
+        nbCasesDevoilees += nombre ;
+        if (compteurRestant == 0 && nbCasesDevoilees==400){
+            //partie gagnée !
+            System.out.println("vous avez gagné !");
+        } else {
+            this.getLabelCompteur().setText(String.valueOf(compteurRestant));
+        }
+        }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
 
 
+    public JLabel getLabelCompteur() {
+        return labelCompteur;
+    }
 
+    public void setLabelCompteur(JLabel labelCompteur) {
+        this.labelCompteur = labelCompteur;
+    }
+
+    public int getNbCasesDevoilees() {
+        return nbCasesDevoilees;
+    }
+
+    public void addNbCasesDevoilees(int nb) {
+        this.nbCasesDevoilees = nbCasesDevoilees + nb;
+    }
 }
