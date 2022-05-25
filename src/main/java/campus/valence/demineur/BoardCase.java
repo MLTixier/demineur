@@ -42,8 +42,17 @@ public class BoardCase {
     public void devoilerCase() {
         panel.removeAll();
         if (this.getContent().equals("X")) {
-            //Perdu ! Ajouter fenêtre.
             panel.setBackground(Color.RED);
+            //Perdu !
+            JLabel label = new JLabel("Vous avez perdu !",  SwingConstants.CENTER);
+            label.setFont(new Font("Serif", Font.BOLD,20));
+            label.setForeground(Color.RED);
+            JFrame frame = new JFrame();
+            frame.setLocation(200, 200);
+            frame.add(label);
+            frame.setSize(300,300);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         } else {
             devoilerCaseVide();
         }
@@ -85,30 +94,34 @@ public class BoardCase {
             }
             panel.add(label);
             panel.repaint();
-            game.addNbCasesDevoilees(-1);
+            game.addNbCasesDevoilees(1);
         }
     }
 
     public void marquerCaseAvecBombe() {
-        if (isCochee()) {
-            panel.removeAll();
-            panel.setBackground(Color.LIGHT_GRAY);
-            panel.repaint();
-            game.addCompteurRestant(1);
-            this.devoilee = false;
-            this.cochee = false;
+        if (isDevoilee()){
+
         } else {
-            panel.removeAll();
-            JLabel label = new JLabel("V");
-            label.setBounds(5, 0, 20, 20);
-            label.setForeground(Color.RED);
-            panel.setBackground(Color.LIGHT_GRAY);
-            panel.add(label);
-            panel.add(label);
-            panel.repaint();
-            game.addCompteurRestant(-1);
-            this.devoilee = true;
-            this.cochee = true;
+            if (isCochee()) {
+                panel.removeAll();
+                panel.setBackground(Color.LIGHT_GRAY);
+                panel.repaint();
+                game.addCompteurRestant(1);
+                this.devoilee = false;
+                this.cochee = false;
+            } else {
+                panel.removeAll();
+                JLabel label = new JLabel("V");
+                label.setBounds(5, 0, 20, 20);
+                label.setForeground(Color.RED);
+                panel.setBackground(Color.LIGHT_GRAY);
+                panel.add(label);
+                panel.add(label);
+                panel.repaint();
+                game.addCompteurRestant(-1);
+                this.devoilee = true;
+                this.cochee = true;
+            }
         }
     }
 

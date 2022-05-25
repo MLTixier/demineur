@@ -57,10 +57,18 @@ public class Game {
 
     public void addCompteurRestant(int nombre) {
         this.compteurRestant = compteurRestant + nombre;
-        nbCasesDevoilees += nombre ;
+        nbCasesDevoilees -= nombre ;
         if (compteurRestant == 0 && nbCasesDevoilees==400){
-            //partie gagnée !
-            System.out.println("vous avez gagné !");
+            //fin de la partie !
+            JLabel label = new JLabel("Vous avez gagné !",  SwingConstants.CENTER);
+            label.setFont(new Font("Serif", Font.BOLD,20));
+            label.setForeground(Color.BLUE);
+            JFrame frame = new JFrame();
+            frame.setLocation(200, 200);
+            frame.add(label);
+            frame.setSize(300,300);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         } else {
             this.getLabelCompteur().setText(String.valueOf(compteurRestant));
         }
