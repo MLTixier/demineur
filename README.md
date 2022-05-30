@@ -1,38 +1,39 @@
-# Campus In The Alps: Algo Démineur
+               ---------------    JEU DU DEMINEUR      --------------- 
 
-![img.png](img.png)
+1 - LANCEMENt DU JEU
 
-Le but de cet exercice est de générer le terrain du démineur seulement, pas de réaliser l'interface du jeu !
+Le jeu démineur se lance :
+- soit avec un run sur le fichier src/main/java/campus.valence.demineur/Main.java, 
+- soit en ouvrant le fichier out/artifacts/demineur_jar/demineur.jar dans le terminal avec la commande suivante :
+java -jar demineur.jar 
 
-## étape 1: Initialisation
 
-- Cloner le projet
-- Importer le projet dans votre IDE
-- Lancer l'exécution des tests unitaires du fichier DemineurTest.java, ils sont tous en rouge
+2 - PARAMETRES
 
-## étape 2: Générer le démineur, avec le positionement des bombes et des cases vides.
+Le jeu positionne par défaut 30 bombes.
+Pour modifier cela, on peut ajouter l'un de ces deux paramètres :
+facile -> lance le jeu avec 5 bombes
+difficile -> lance le jeu avec 40 bombes
 
-Il n'est pas évident de positionner de façon aléatoire les bombes, en respectant la contrainte du nombre demandé.
-Car si on veut avoir par exemple 50 bombes sur un démineur en 10x10 (100 cases), il y a de forte chance pour que l'on tire de façon aléatoire plusieurs fois la même position pour une bombe.
 
-On peut faire cette génération en deux temps :
-- d'abord créer toutes les bombes avec leurs coordonnées
-- ensuite remplir le terrain du démineur, avec ces bombes et des cases vides
+3 - REGLES DU JEU
 
-En Java, les `java.util.Set` servent à contenir un ensemble **unique** d'objets. On peut donc se servir de cette collection pour nous aider dans la première étape, via une boucle comme celle-ci :
+Le but du démineur est d'arriver à repérer toutes les bombes cachées aléatoirement sur le plateau.
+Un compteur situé en haut à gauche note le nombre de bombes restantes que le joueur n'a pas encore repérées.
 
-    Set<BombCase> bombes = new HashSet<>(); // création d'un ensemble unique de bombes
-    while (bombes.size() < 10) {            // tant que mon ensemble contient moins que 10 bombes 
-       bombes.add(...);                     // j'ajoute une bombe à mon ensemble, si une même bombes existe déjà elle ne sera pas ajoutée mais remplacée
-    }
+Par un clic droit, le joueur peut choisir de marquer une case par une présumée bombe. La case sera ainsi marquée par un v rouge.
+Par un clic gauche, le joeuur peut révéler le contenu d'une case. Si celle-ci est une bombe, il a perdu. 
+Dans le cas contraire, la case indiquera par un numéro le nombre de cases voisines contenant une bombe.
 
-Java utilise les méthodes `hashCode` et `equals` de la classe `Object` pour déterminer quand deux objets sont égaux entre eux. Vous allez donc devoir implémenter ces méthodes dans les classes voulues pour que le `Set` de `bombes` ne puisse pas contenir deux éléments sur la même coordonnée.
+Le jeu se termine soit au clic gauche sur une bombe (perdu), soit lorsque l'ensemble des cases du plateau a été marquée et que toutes les bombes ont été correctement localisées (gagné).
 
-## étape 3: Savoir compter le nombre de case bombes qui entour une autre case.
 
-Implémenter le code de la méthode `countBombsAround` pour faire passer les tests `shouldCountAllBombsAroundWhenNone` et `shouldCountAllBombsAroundWhenSome`.
+4 - VERSIONS A VENIR
 
-## étape 4: Savoir déssiner la board
+Les prochaines versions devront :
+- proposer au joueur de choisir son niveau de difficulté
+- générer le plateau au premier clic pour éviter de tomber sur une bombe dès le démarrage
+- proposer au joueur une version démo avec l'énoncé des règles
 
-Implémenter le code de la méthode `boardAsString` pour faire passer le test `shouldDisplayTheBoardWithBombsAndCount`
 
+               ---------------    BON JEU !      --------------- 
