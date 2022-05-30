@@ -74,6 +74,7 @@ public class BoardCase {
     }
 
     public void devoilerCaseVide() {
+        this.cochee = false;
         if (!this.isDevoilee()) {
             this.devoilee = true;
             panel.removeAll();
@@ -119,7 +120,7 @@ public class BoardCase {
                 panel.add(label);
                 panel.repaint();
                 game.addCompteurRestant(-1);
-                this.devoilee = true;
+                this.devoilee = false;
                 this.cochee = true;
             }
         }
